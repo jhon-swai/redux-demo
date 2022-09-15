@@ -47,11 +47,13 @@ const iceCreamReducer = (state=initialIcecreamState, action) =>{
     }
 }
 
+// combine the reducer
 const rootReducer = combineReducers({
     cake: cakeReducer,
     icecream: iceCreamReducer
 })
 
+// create your store
 const store = createStore(rootReducer)
 
 // get the initial state from the reducer
@@ -62,7 +64,7 @@ const unsubscribe = store.subscribe(
     ()=> console.log("Updated state", store.getState())
 )
 
-// call the actions
+// sample call the actions
 store.dispatch(buyCake())
 store.dispatch(buyCake())
 store.dispatch(buyIcecream())
