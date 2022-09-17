@@ -37,8 +37,9 @@ const initialState = {
 const reducer = (state = initialState, action)=> {
     switch(action.type){
         case FETCH_USER_REQUEST: return {
-            ...state,
-            loading: true
+            data: [],
+            loading: true,
+            error: ""
         }
         case FETCH_USER_SUCCESS: return {
             loading:false,
@@ -59,8 +60,8 @@ const reducer = (state = initialState, action)=> {
 }
 
 
-const fetchUsers = ()=> {
-    return function(dispatch){
+const fetchUsers = () => {
+    return function(dispatch, getState){
         dispatch(fetchUserRequest())
         axios.get("https://jsonplaceholder.typicode.com/users")
             .then(response => {
@@ -81,10 +82,11 @@ const store = createStore(reducer, applyMiddleware(thunkMiddleware))
 // initial state
 console.log("****initial state", store.getState())
 
-const unsubscribe = store.subscribe(()=> {console.log("*********Changed state", store.getState())})
+store.subscribe(()=> {console.log("*********Changed state", store.getState())})
 
 store.dispatch(fetchUsers())
-unsubscribe()
+
+
 
 
 
